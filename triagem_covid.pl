@@ -12,6 +12,7 @@ triagem :- carrega('triagem.bd'),
     dispneia(Dado),
     idade(Dado),
     comorbidades(Dado),
+    continua(Resposta),
     Resposta = n, 
     !,
     salva(paciente, 'triagem.bd').
@@ -34,6 +35,11 @@ responde(Nome) :-
     condicao(Nome, Condicao),
     !,
     format('Condição do paciente ~w é ~w: ~n',[Nome,Condicao]).
+
+continua(Resposta) :-
+    format('~nContinua? [s/n] '),
+    get_char(Resposta),
+    get_char('\n').
 
 %===Perguntas====%
 

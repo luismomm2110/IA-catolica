@@ -1,0 +1,4 @@
+paciente(Dado) :-
+    format('~nNome do paciente: '),
+    gets(Dado).
+
