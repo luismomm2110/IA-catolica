@@ -1,4 +1,58 @@
-paciente(Dado) :-
-    format('~nNome do paciente: '),
-    gets(Dado).
+estado(Paciente, gravissimo) :-
+    (   criterio(Paciente, freqResp, Indicador),
+        Indicador>30
+    ;   criterio(Paciente, paSis, Indicador),
+        Indicador<90
+    ;   criterio(Paciente, saO2, Indicador),
+        Indicador<95
+    ;   criterio(Paciente, dispneia, Indicador),
+        Indicador="sim"
+    ).
+estado(Paciente, grave) :-
+    (   criterio(Paciente, temperatura, Indicador),
+        Indicador>39
+    ;   criterio(Paciente, paSis, Indicador),
+        Indicador>=90,
+        Indicador=<100
+    ;   criterio(Paciente, idade, Indicador),
+        Indicador>80
+    ;   criterio(Paciente, comorbidades, Indicador),
+        Indicador>2
+    ).
+estado(Paciente, moderado) :-
+    (   criterio(Paciente, temperatura, Indicador),
+        (   Indicador<35
+        ;   Indicador>=37,
+            Indicador=<39
+        )
+    ;   criterio(Paciente, freqBatimento, Indicador),
+        Indicador>100
+    ;   criterio(Paciente, freqResp, Indicador),
+        Indicador>19,
+        Indicador<30
+    ;   criterio(Paciente, idade, Indicador),
+        Indicador>60,
+        Indicador<79
+    ;   criterio(Paciente, comorbidades, Indicador),
+        Indicador=1
+    ).
+estado(Paciente, leve) :-
+    (   criterio(Paciente, temperatura, Indicador),
+        Indicador>35,
+        Indicador=<37
+    ;   criterio(Paciente, freqBatimento, Indicador),
+        Indicador<100
+    ;   criterio(Paciente, freqResp, Indicador),
+        Indicador<18
+    ;   criterio(Paciente, paSis, Indicador),
+        Indicador>100
+    ;   criterio(Paciente, saO2, Indicador),
+        Indicador>=95
+    ;   criterio(Paciente, dispneia, Indicador),
+        Indicador="nao"
+    ;   criterio(Paciente, idade, Indicador),
+        Indicador<60
+    ;   criterio(Paciente, comorbidades, Indicador),
+        Indicador=0
+    ).
 

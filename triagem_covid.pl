@@ -1,4 +1,4 @@
-:- dynamic triagem/3.
+:- dynamic criterio/3.
 
 triagem :- carrega('triagem.bd'),
     format('~n*** Critérios clínicos ***~n~n'),
@@ -12,10 +12,8 @@ triagem :- carrega('triagem.bd'),
     dispneia(Dado),
     idade(Dado),
     comorbidades(Dado),
-    continua(Resposta),
-    Resposta = n, 
-    !,
-    salva(paciente, 'triagem.bd').
+    resposta(Dado),
+    salva(estado, 'triagem.bd').
 
 carrega(Arquivo) :-
     exists_file(Arquivo),
@@ -31,15 +29,10 @@ gets(String) :-
     read_line_to_codes(user_input,Char),
     name(String,Char).
 
-responde(Nome) :-
-    condicao(Nome, Condicao),
+resposta(Nome) :-
+    estado(Nome, Condicao),
     !,
     format('Condição do paciente ~w é ~w: ~n',[Nome,Condicao]).
-
-continua(Resposta) :-
-    format('~nContinua? [s/n] '),
-    get_char(Resposta),
-    get_char('\n').
 
 %===Perguntas====%
 
