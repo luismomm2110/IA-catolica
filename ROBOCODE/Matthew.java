@@ -1,12 +1,11 @@
 package teamsandman;
-import robocode.*;
 
+import robocode.*;
 
 import robocode.Droid;
 import robocode.MessageEvent;
 import robocode.TeamRobot;
 import static robocode.util.Utils.normalRelativeAngleDegrees;
-
 
 // API help : https://robocode.sourceforge.io/docs/robocode/robocode/Robot.html
 
@@ -14,20 +13,17 @@ import static robocode.util.Utils.normalRelativeAngleDegrees;
  * Matthew - a robot by Luis, Eder e Raniel
  */
 
-// subclasse de droid, não pode se mexer, mas tem mais estamina
+// subclasse de droid, não tem scanner, mas tem mais estamina
 // recebe ordem do Leader
-public class Matthew extends TeamRobot implements Droid
-{
-	
+public class Matthew extends TeamRobot implements Droid {
+
 	/**
-	 * run: baseado no Robo Leader and Walls
+	 * run: baseado no MyFirstDroid and Walls
 	 */
 	boolean peek; // nao muda se tiver robo
 	double moveAmount; // How quantidade de movimento
-	
-	public void run() {
-		// API de Cor
 
+	public void run() {
 		// usa o máximo de movimento possível.
 		moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
 		// inicialmente não tem nenhum robo, peek é falso
@@ -46,12 +42,13 @@ public class Matthew extends TeamRobot implements Droid
 			// se move junto à parede
 			ahead(moveAmount);
 			peek = false;
-			//vira
+			// vira
 			turnRight(90);
 		}
 	}
+
 	/**
-	 * onMessageReceived:  Quando receber mensagem do líder Morpheus
+	 * onMessageReceived: Quando receber mensagem do líder Morpheus
 	 */
 	public void onMessageReceived(MessageEvent e) {
 		// atira conforme mensagem
@@ -64,7 +61,6 @@ public class Matthew extends TeamRobot implements Droid
 			// Calculate angulo do alvo
 			double theta = Math.toDegrees(Math.atan2(dx, dy));
 
-			
 			turnGunRight(normalRelativeAngleDegrees(theta - getGunHeading()));
 			// Atira com o máximo de potência mesmo gastando estamina
 			fire(3);
@@ -79,7 +75,7 @@ public class Matthew extends TeamRobot implements Droid
 			setBulletColor(c.bulletColor);
 		}
 	}
-	
+
 	// muda o sentido se tomar um tiro, pro outro lado da parede
 	public void onHitByBullet(HitByBulletEvent e) {
 		turnLeft(90 - e.getBearing());
