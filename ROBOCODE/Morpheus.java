@@ -98,6 +98,6 @@ public class Morpheus extends TeamRobot
 	
 	// muda o sentido se tomar um tiro, pro outro lado da parede
 	public void onHitByBullet(HitByBulletEvent e) {
-		turnLeft(90 - e.getBearing());
+		turnRight(90 - e.getBearing());
 	}
 }

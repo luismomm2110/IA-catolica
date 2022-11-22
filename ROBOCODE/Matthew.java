@@ -19,12 +19,39 @@ import static robocode.util.Utils.normalRelativeAngleDegrees;
 public class Matthew extends TeamRobot implements Droid
 {
 	
-	public void run() {
-		out.println("Matthews ready.");
-	}
-
 	/**
-	 * onMessageReceived:  Quando receber mensagem do líder Matthews
+	 * run: baseado no Robo Leader and Walls
+	 */
+	boolean peek; // nao muda se tiver robo
+	double moveAmount; // How quantidade de movimento
+	
+	public void run() {
+		// API de Cor
+
+		// usa o máximo de movimento possível.
+		moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
+		// inicialmente não tem nenhum robo, peek é falso
+		peek = false;
+
+		// vira à esquerda pra parede
+		turnLeft(getHeading() % 90);
+		ahead(moveAmount);
+		// Vira arma pra direita
+		peek = true;
+		turnGunRight(90);
+		turnRight(90);
+
+		while (true) {
+			peek = true;
+			// se move junto à parede
+			ahead(moveAmount);
+			peek = false;
+			//vira
+			turnRight(90);
+		}
+	}
+	/**
+	 * onMessageReceived:  Quando receber mensagem do líder Morpheus
 	 */
 	public void onMessageReceived(MessageEvent e) {
 		// atira conforme mensagem
@@ -51,5 +78,10 @@ public class Matthew extends TeamRobot implements Droid
 			setScanColor(c.scanColor);
 			setBulletColor(c.bulletColor);
 		}
+	}
+	
+	// muda o sentido se tomar um tiro, pro outro lado da parede
+	public void onHitByBullet(HitByBulletEvent e) {
+		turnLeft(90 - e.getBearing());
 	}
 }
